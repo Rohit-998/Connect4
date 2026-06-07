@@ -6,8 +6,8 @@ __pycache__/
 *.pyc
 backend/venv/
 
-# Model checkpoints (too large for git)
-*.h5
+# Model checkpoints
+# *.h5 (Uncommented so Render can access models)
 
 # Node
 node_modules/
