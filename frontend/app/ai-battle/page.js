@@ -66,7 +66,7 @@ export default function AIvsAIPage() {
       return { text: "DQN (RL) Wins!", icon: <Zap size={20} />, color: "text-yellow-400" };
     if (winner === "alphabeta")
       return { text: "Alpha-Beta Wins!", icon: <Brain size={20} />, color: "text-emerald-400" };
-    return { text: "Draw!", icon: <Minus size={20} />, color: "text-white/60" };
+    return { text: "Draw!", icon: <Minus size={20} />, color: "text-white font-bold" };
   };
 
   const result = getResultDisplay();
@@ -84,14 +84,14 @@ export default function AIvsAIPage() {
         <div className="flex items-center justify-between px-6 py-4">
           <a
             href="/"
-            className="flex items-center gap-2 text-white/30 hover:text-white/60 transition-colors text-sm"
+            className="flex items-center gap-2 text-white/70 font-semibold hover:text-white font-bold transition-colors text-sm"
           >
             <ArrowLeft size={16} />
             Back
           </a>
 
           <div className="flex items-center gap-3">
-            <div className="flex bg-white/5 rounded-full p-0.5">
+            <div className="flex bg-black/50 backdrop-blur-md rounded-full p-0.5">
               {["easy", "medium", "hard"].map((d) => (
                 <button
                   key={d}
@@ -100,7 +100,7 @@ export default function AIvsAIPage() {
                   className={`px-4 py-1.5 rounded-full text-xs font-medium transition-all ${
                     difficulty === d
                       ? "bg-white text-black"
-                      : "text-white/30 hover:text-white/60"
+                      : "text-white/70 font-semibold hover:text-white font-bold"
                   }`}
                 >
                   {d}
@@ -136,7 +136,7 @@ export default function AIvsAIPage() {
                 )}
 
                 {isReplaying && (
-                  <div className="flex items-center gap-2 text-white/40 text-sm">
+                  <div className="flex items-center gap-2 text-white/90 font-bold text-sm">
                     <motion.div
                       animate={{ rotate: 360 }}
                       transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
@@ -150,7 +150,7 @@ export default function AIvsAIPage() {
                 <button
                   onClick={runBattle}
                   disabled={loading || isReplaying}
-                  className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 hover:bg-white/20 text-white/60 hover:text-white text-sm transition-all disabled:opacity-30"
+                  className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 hover:bg-white/20 text-white font-bold hover:text-white text-sm transition-all disabled:opacity-30"
                 >
                   {loading ? (
                     <>
@@ -181,10 +181,10 @@ export default function AIvsAIPage() {
             </div>
 
             {/* Right Panel - Info */}
-            <div className="flex flex-col gap-4 w-80">
+            <div className="flex flex-col gap-4 w-full lg:w-80">
               {/* VS Card */}
-              <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-5">
-                <h2 className="text-white/60 text-xs font-medium tracking-widest mb-4">
+              <div className="bg-black/50 backdrop-blur-md backdrop-blur-sm border border-white/10 rounded-2xl p-5">
+                <h2 className="text-white font-bold text-xs font-medium tracking-widest mb-4">
                   AI VS AI
                 </h2>
                 <div className="flex items-center justify-between">
@@ -193,28 +193,28 @@ export default function AIvsAIPage() {
                       <Zap size={18} className="text-yellow-400" />
                     </div>
                     <div className="text-white text-sm font-medium">DQN</div>
-                    <div className="text-white/30 text-xs">Reinforcement Learning</div>
+                    <div className="text-white/70 font-semibold text-xs">Reinforcement Learning</div>
                     <div className="text-yellow-400/60 text-xs mt-1">Player 1</div>
                   </div>
-                  <div className="text-white/20 text-lg font-bold">VS</div>
+                  <div className="text-white/50 font-medium text-lg font-bold">VS</div>
                   <div className="text-center">
                     <div className="w-10 h-10 rounded-full bg-emerald-500/20 flex items-center justify-center mx-auto mb-2">
                       <Brain size={18} className="text-emerald-400" />
                     </div>
                     <div className="text-white text-sm font-medium">Alpha-Beta</div>
-                    <div className="text-white/30 text-xs">Game Tree Search</div>
+                    <div className="text-white/70 font-semibold text-xs">Game Tree Search</div>
                     <div className="text-emerald-400/60 text-xs mt-1">Player 2</div>
                   </div>
                 </div>
               </div>
 
               {/* Move Log */}
-              <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-5 max-h-64 overflow-y-auto scrollbar-hide">
-                <h2 className="text-white/60 text-xs font-medium tracking-widest mb-3">
+              <div className="bg-black/50 backdrop-blur-md backdrop-blur-sm border border-white/10 rounded-2xl p-5 max-h-64 overflow-y-auto scrollbar-hide">
+                <h2 className="text-white font-bold text-xs font-medium tracking-widest mb-3">
                   MOVE LOG
                 </h2>
                 {moves.length === 0 ? (
-                  <p className="text-white/20 text-xs">
+                  <p className="text-white/50 font-medium text-xs">
                     Click &quot;Start Battle&quot; to watch DQN vs Alpha-Beta
                   </p>
                 ) : (
@@ -224,7 +224,7 @@ export default function AIvsAIPage() {
                         key={i}
                         className="flex items-center justify-between text-xs"
                       >
-                        <span className="text-white/20">{m.turn}.</span>
+                        <span className="text-white/50 font-medium">{m.turn}.</span>
                         <span
                           className={
                             m.player === "dqn"
@@ -234,7 +234,7 @@ export default function AIvsAIPage() {
                         >
                           {m.player === "dqn" ? "DQN" : "α-β"}
                         </span>
-                        <span className="text-white/40">col {m.col + 1}</span>
+                        <span className="text-white/90 font-bold">col {m.col + 1}</span>
                       </div>
                     ))}
                   </div>

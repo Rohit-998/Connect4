@@ -5,9 +5,9 @@ import { motion } from "motion/react"
 export default function QValuePanel({ qValues, aiMove }) {
   if (!qValues || qValues.length === 0) {
     return (
-      <div className="bg-white/[0.03] border border-white/10 rounded-2xl p-6">
-        <h3 className="text-white/30 text-xs uppercase tracking-[0.2em] mb-4">AI Brain</h3>
-        <p className="text-white/20 text-sm">Make a move to see the AI think...</p>
+      <div className="bg-black/40 backdrop-blur-md border border-white/10 rounded-2xl p-6">
+        <h3 className="text-white/70 font-semibold text-xs uppercase tracking-[0.2em] mb-4">AI Brain</h3>
+        <p className="text-white/50 font-medium text-sm">Make a move to see the AI think...</p>
       </div>
     )
   }
@@ -17,8 +17,8 @@ export default function QValuePanel({ qValues, aiMove }) {
   const maxQVal = Math.max(...qValues)
 
   return (
-    <div className="bg-white/[0.03] border border-white/10 rounded-2xl p-6">
-      <h3 className="text-white/30 text-xs uppercase tracking-[0.2em] mb-6">AI Brain — Q-Values</h3>
+    <div className="bg-black/40 backdrop-blur-md border border-white/10 rounded-2xl p-6">
+      <h3 className="text-white/70 font-semibold text-xs uppercase tracking-[0.2em] mb-6">AI Brain — Q-Values</h3>
 
       <div className="flex items-end gap-2 h-40">
         {qValues.map((q, i) => {
@@ -40,8 +40,8 @@ export default function QValuePanel({ qValues, aiMove }) {
                 animate={{ height: `${height}%` }}
                 transition={{ type: "spring", stiffness: 200, damping: 20, delay: i * 0.05 }}
               />
-              <span className="text-[10px] text-white/30 font-mono">{q.toFixed(2)}</span>
-              <span className={`text-[10px] font-mono ${isChosen ? "text-yellow-400" : "text-white/20"}`}>
+              <span className="text-[10px] text-white/70 font-semibold font-mono">{q.toFixed(2)}</span>
+              <span className={`text-[10px] font-mono ${isChosen ? "text-yellow-400" : "text-white/50 font-medium"}`}>
                 {i + 1}
               </span>
             </div>
@@ -51,7 +51,7 @@ export default function QValuePanel({ qValues, aiMove }) {
 
       <div className="mt-4 pt-4 border-t border-white/5">
         <div className="flex justify-between text-[10px]">
-          <span className="text-white/20">Column preference</span>
+          <span className="text-white/50 font-medium">Column preference</span>
           {aiMove !== null && aiMove !== undefined && (
             <span className="text-yellow-400/60">
               Best: Col {aiMove + 1} ({qValues[aiMove]?.toFixed(3)})

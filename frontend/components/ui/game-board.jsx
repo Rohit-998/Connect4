@@ -68,7 +68,7 @@ export default function GameBoard({ board, onColumnClick, disabled, lastAiMove, 
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0 }}
-            className="mt-3 text-center text-white/30 text-xs tracking-wide"
+            className="mt-3 text-center text-white/70 font-semibold text-xs tracking-wide"
           >
             AI played column {lastAiMove + 1}
           </motion.div>

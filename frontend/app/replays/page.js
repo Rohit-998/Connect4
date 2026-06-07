@@ -35,13 +35,13 @@ export default function ReplaysPage() {
     if (result === "win")
       return <Trophy size={14} className="text-green-400" />;
     if (result === "loss") return <Frown size={14} className="text-red-400" />;
-    return <Minus size={14} className="text-white/40" />;
+    return <Minus size={14} className="text-white/90 font-bold" />;
   };
 
   const getResultColor = (result) => {
     if (result === "win") return "text-green-400/80";
     if (result === "loss") return "text-red-400/80";
-    return "text-white/40";
+    return "text-white/90 font-bold";
   };
 
   return (
@@ -57,11 +57,11 @@ export default function ReplaysPage() {
         <div className="flex items-center justify-between px-6 py-4">
           <a
             href="/"
-            className="flex items-center gap-2 text-white/30 hover:text-white/60 transition-colors text-sm"
+            className="flex items-center gap-2 text-white/70 font-semibold hover:text-white font-bold transition-colors text-sm"
           >
             <ArrowLeft size={16} /> Back
           </a>
-          <h1 className="text-white/30 text-xs uppercase tracking-[0.3em]">
+          <h1 className="text-white/70 font-semibold text-xs uppercase tracking-[0.3em]">
             Your Replays
           </h1>
           <div className="w-16" />
@@ -70,10 +70,10 @@ export default function ReplaysPage() {
         {/* Content */}
         <div className="max-w-2xl mx-auto px-6 py-12">
           {loading ? (
-            <div className="text-center text-white/20 text-sm">Loading...</div>
+            <div className="text-center text-white/50 font-medium text-sm">Loading...</div>
           ) : !session ? (
             <div className="text-center py-20">
-              <p className="text-white/30 text-sm mb-4">
+              <p className="text-white/70 font-semibold text-sm mb-4">
                 Login to view your replays
               </p>
               <a
@@ -85,7 +85,7 @@ export default function ReplaysPage() {
             </div>
           ) : replays.length === 0 ? (
             <div className="text-center py-20">
-              <p className="text-white/30 text-sm mb-4">
+              <p className="text-white/70 font-semibold text-sm mb-4">
                 No replays yet. Play some games first!
               </p>
               <a
@@ -104,7 +104,7 @@ export default function ReplaysPage() {
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: i * 0.05 }}
-                  className="flex items-center justify-between p-4 bg-white/[0.03] border border-white/5 rounded-xl hover:bg-white/[0.06] hover:border-white/10 transition-all group"
+                  className="flex items-center justify-between p-4 bg-black/40 backdrop-blur-md border border-white/5 rounded-xl hover:bg-white/[0.06] hover:border-white/10 transition-all group"
                 >
                   <div className="flex items-center gap-4">
                     {getResultIcon(replay.result)}
@@ -114,7 +114,7 @@ export default function ReplaysPage() {
                       >
                         {replay.result}
                       </span>
-                      <span className="text-white/20 text-xs ml-3">
+                      <span className="text-white/50 font-medium text-xs ml-3">
                         vs {replay.opponent === "dqn" ? "DQN" : "Alpha-Beta"} ({replay.difficulty})
                       </span>
                     </div>
@@ -127,7 +127,7 @@ export default function ReplaysPage() {
                     <span className="text-white/15 text-xs">
                       {new Date(replay.created_at).toLocaleDateString()}
                     </span>
-                    <span className="px-3 py-1 rounded-full bg-white/5 text-white/30 text-xs font-medium group-hover:bg-white/10 group-hover:text-white/60 transition-all">
+                    <span className="px-3 py-1 rounded-full bg-black/50 backdrop-blur-md text-white/70 font-semibold text-xs font-medium group-hover:bg-white/10 group-hover:text-white font-bold transition-all">
                       Watch
                     </span>
                   </div>

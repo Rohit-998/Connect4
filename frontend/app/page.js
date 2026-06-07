@@ -32,7 +32,7 @@ export default function Home() {
               Four
             </h1>
 
-            <p className="mt-8 text-white/40 text-base md:text-lg max-w-lg mx-auto leading-relaxed font-light">
+            <p className="mt-8 text-white/90 font-bold text-base md:text-lg max-w-lg mx-auto leading-relaxed font-medium">
               Two AI engines built from scratch.{" "}
               <span className="text-yellow-400/60">Deep Q-Network</span> meets{" "}
               <span className="text-emerald-400/60">Alpha-Beta Pruning</span>.
@@ -52,7 +52,7 @@ export default function Home() {
                 href="/ai-battle"
                 whileHover={{ scale: 1.03 }}
                 whileTap={{ scale: 0.97 }}
-                className="px-8 py-3.5 bg-white/[0.06] text-white/60 font-light rounded-full text-sm hover:bg-white/[0.1] transition-colors"
+                className="px-8 py-3.5 bg-white/[0.06] text-white font-bold font-medium rounded-full text-sm hover:bg-white/[0.1] transition-colors"
               >
                 AI vs AI
               </motion.a>
@@ -75,7 +75,7 @@ export default function Home() {
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
-              className="text-white/20 text-[11px] uppercase tracking-[0.4em] mb-16"
+              className="text-white/50 font-medium text-[11px] uppercase tracking-[0.4em] mb-16"
             >
               Two engines, one board
             </motion.p>
@@ -91,12 +91,12 @@ export default function Home() {
                 <h3 className="text-white text-3xl md:text-5xl font-bold tracking-tight">DQN</h3>
                 <span className="text-yellow-500/40 text-sm font-mono">reinforcement learning</span>
               </div>
-              <p className="text-white/35 text-base leading-relaxed max-w-2xl font-light">
+              <p className="text-white/35 text-base leading-relaxed max-w-2xl font-medium">
                 A Convolutional Neural Network trained through 10,000 self-play episodes.
                 It learned patterns from experience — not programmed rules. Sometimes brilliant,
                 sometimes blind. Uses a safety layer to block obvious threats it might miss.
               </p>
-              <div className="mt-6 flex gap-6 text-xs text-white/20 font-mono">
+              <div className="mt-6 flex gap-6 text-xs text-white/50 font-medium font-mono">
                 <span>easy · ep8000</span>
                 <span>medium · ep6000</span>
                 <span>hard · ep2000</span>
@@ -113,12 +113,12 @@ export default function Home() {
                 <h3 className="text-white text-3xl md:text-5xl font-bold tracking-tight">Alpha-Beta</h3>
                 <span className="text-emerald-500/40 text-sm font-mono">game tree search</span>
               </div>
-              <p className="text-white/35 text-base leading-relaxed max-w-2xl font-light">
+              <p className="text-white/35 text-base leading-relaxed max-w-2xl font-medium">
                 Hand-crafted minimax with alpha-beta pruning. Searches up to 6 moves ahead,
                 evaluates center control, threats, and blocking. Deterministic —
                 given the same board, it always finds the mathematically best move. No luck.
               </p>
-              <div className="mt-6 flex gap-6 text-xs text-white/20 font-mono">
+              <div className="mt-6 flex gap-6 text-xs text-white/50 font-medium font-mono">
                 <span>easy · depth 2</span>
                 <span>medium · depth 4</span>
                 <span>hard · depth 6</span>
@@ -134,7 +134,7 @@ export default function Home() {
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
-              className="text-white/20 text-[11px] uppercase tracking-[0.4em] mb-16"
+              className="text-white/50 font-medium text-[11px] uppercase tracking-[0.4em] mb-16"
             >
               What you get
             </motion.p>
@@ -174,7 +174,7 @@ export default function Home() {
                   transition={{ delay: i * 0.06 }}
                 >
                   <h4 className="text-white/70 text-sm font-medium mb-2">{f.title}</h4>
-                  <p className="text-white/25 text-sm font-light leading-relaxed">{f.desc}</p>
+                  <p className="text-white/25 text-sm font-medium leading-relaxed">{f.desc}</p>
                 </motion.div>
               ))}
             </div>
@@ -188,7 +188,7 @@ export default function Home() {
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
-              className="text-white/20 text-[11px] uppercase tracking-[0.4em] mb-16"
+              className="text-white/50 font-medium text-[11px] uppercase tracking-[0.4em] mb-16"
             >
               How it works
             </motion.p>
@@ -207,9 +207,9 @@ export default function Home() {
                   transition={{ delay: i * 0.1 }}
                   className="flex-1"
                 >
-                  <span className="text-white/8 text-6xl font-bold font-mono block leading-none mb-4">{step.n}</span>
-                  <h4 className="text-white/70 text-sm font-medium mb-2">{step.title}</h4>
-                  <p className="text-white/25 text-sm font-light">{step.desc}</p>
+                  <span className="text-white/30 text-6xl font-bold font-mono block leading-none mb-4">{step.n}</span>
+                  <h4 className="text-white/90 text-sm font-medium mb-2">{step.title}</h4>
+                  <p className="text-white/60 text-sm font-medium">{step.desc}</p>
                 </motion.div>
               ))}
             </div>
@@ -233,7 +233,7 @@ export default function Home() {
                 transition={{ delay: i * 0.08 }}
               >
                 <span className="text-white text-3xl md:text-4xl font-bold font-mono">{s.n}</span>
-                <span className="text-white/20 text-xs ml-3">{s.l}</span>
+                <span className="text-white/50 font-medium text-xs ml-3">{s.l}</span>
               </motion.div>
             ))}
           </div>
@@ -242,14 +242,14 @@ export default function Home() {
         {/* ─── STACK + FOOTER ─── */}
         <footer className="px-6 py-12 border-t border-white/[0.03]">
           <div className="max-w-5xl mx-auto flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-            <p className="text-white/15 text-xs font-light">
+            <p className="text-white/15 text-xs font-medium">
               TensorFlow · NumPy · FastAPI · Next.js · Tailwind · Supabase · Framer Motion
             </p>
             <a
               href="https://github.com/Rohit-998/Connect4"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-white/15 text-xs hover:text-white/40 transition-colors"
+              className="text-white/15 text-xs hover:text-white/90 font-bold transition-colors"
             >
               source ↗
             </a>

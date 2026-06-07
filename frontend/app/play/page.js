@@ -142,7 +142,7 @@ export default function PlayPage() {
         icon: <Frown size={20} />,
         color: "text-red-400",
       };
-    return { text: "Draw!", icon: <Minus size={20} />, color: "text-white/60" };
+    return { text: "Draw!", icon: <Minus size={20} />, color: "text-white font-bold" };
   };
 
   if (showAuth) {
@@ -172,7 +172,7 @@ export default function PlayPage() {
         <div className="flex items-center justify-between px-6 py-4">
           <a
             href="/"
-            className="flex items-center gap-2 text-white/30 hover:text-white/60 transition-colors text-sm"
+            className="flex items-center gap-2 text-white/70 font-semibold hover:text-white font-bold transition-colors text-sm"
           >
             <ArrowLeft size={16} />
             Back
@@ -180,7 +180,7 @@ export default function PlayPage() {
 
           <div className="flex items-center gap-3">
             {/* Difficulty selector */}
-            <div className="flex bg-white/5 rounded-full p-0.5">
+            <div className="flex bg-black/50 backdrop-blur-md rounded-full p-0.5">
               {["easy", "medium", "hard"].map((d) => (
                 <button
                   key={d}
@@ -191,7 +191,7 @@ export default function PlayPage() {
                   className={`px-4 py-1.5 rounded-full text-xs font-medium transition-all ${
                     difficulty === d
                       ? "bg-white text-black"
-                      : "text-white/30 hover:text-white/60"
+                      : "text-white/70 font-semibold hover:text-white font-bold"
                   }`}
                 >
                   {d}
@@ -200,7 +200,7 @@ export default function PlayPage() {
             </div>
 
             {/* Opponent selector */}
-            <div className="flex bg-white/5 rounded-full p-0.5">
+            <div className="flex bg-black/50 backdrop-blur-md rounded-full p-0.5">
               {["alphabeta", "dqn"].map((o) => (
                 <button
                   key={o}
@@ -211,7 +211,7 @@ export default function PlayPage() {
                   className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all ${
                     opponent === o
                       ? "bg-emerald-500/80 text-white"
-                      : "text-white/30 hover:text-white/60"
+                      : "text-white/70 font-semibold hover:text-white font-bold"
                   }`}
                 >
                   {o === "alphabeta" ? "α-β" : "RL"}
@@ -221,7 +221,7 @@ export default function PlayPage() {
 
             {/* User status */}
             <div className="flex items-center gap-3">
-              <span className="text-white/20 text-xs">
+              <span className="text-white/50 font-medium text-xs">
                 {isGuest ? "Guest" : session?.user?.user_metadata?.user_name || session?.user?.email?.split("@")[0]}
               </span>
               {!isGuest && session && (
@@ -256,9 +256,9 @@ export default function PlayPage() {
                     <h1 className="text-3xl font-bold text-white text-center">
                       Ready to play?
                     </h1>
-                    <p className="text-white/30 text-sm mt-2 text-center">
+                    <p className="text-white/70 font-semibold text-sm mt-2 text-center">
                       {opponent === "alphabeta" ? "Alpha-Beta" : "DQN (RL)"} •{" "}
-                      <span className="text-white/60 capitalize">
+                      <span className="text-white font-bold capitalize">
                         {difficulty}
                       </span>
                       {opponent === "alphabeta" && difficulty === "easy" && " — depth 2"}
@@ -300,7 +300,7 @@ export default function PlayPage() {
                       <motion.span
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
-                        className="text-white/30 text-xs flex items-center gap-2"
+                        className="text-white/70 font-semibold text-xs flex items-center gap-2"
                       >
                         <motion.span
                           animate={{ rotate: 360 }}
@@ -330,7 +330,7 @@ export default function PlayPage() {
 
                         <button
                           onClick={startGame}
-                          className="flex items-center gap-1.5 text-white/30 hover:text-white/60 text-xs transition-colors"
+                          className="flex items-center gap-1.5 text-white/70 font-semibold hover:text-white font-bold text-xs transition-colors"
                         >
                           <RotateCcw size={12} /> New Game
                         </button>
@@ -355,12 +355,12 @@ export default function PlayPage() {
               <QValuePanel qValues={qValues} aiMove={aiMove} />
 
               {/* Move log */}
-              <div className="bg-white/[0.03] border border-white/10 rounded-2xl p-6 max-h-48 overflow-y-auto">
-                <h3 className="text-white/30 text-xs uppercase tracking-[0.2em] mb-4">
+              <div className="bg-black/40 backdrop-blur-md border border-white/10 rounded-2xl p-6 max-h-48 overflow-y-auto">
+                <h3 className="text-white/70 font-semibold text-xs uppercase tracking-[0.2em] mb-4">
                   Move Log
                 </h3>
                 {moves.length === 0 ? (
-                  <p className="text-white/20 text-sm">No moves yet</p>
+                  <p className="text-white/50 font-medium text-sm">No moves yet</p>
                 ) : (
                   <div className="space-y-1">
                     {moves.map((m, i) => (
@@ -368,7 +368,7 @@ export default function PlayPage() {
                         key={i}
                         className="flex justify-between text-[11px] font-mono"
                       >
-                        <span className="text-white/20">{m.turn}.</span>
+                        <span className="text-white/50 font-medium">{m.turn}.</span>
                         <span
                           className={
                             m.player === "human"
@@ -378,7 +378,7 @@ export default function PlayPage() {
                         >
                           {m.player}
                         </span>
-                        <span className="text-white/20">col {m.col + 1}</span>
+                        <span className="text-white/50 font-medium">col {m.col + 1}</span>
                       </div>
                     ))}
                   </div>
@@ -392,7 +392,7 @@ export default function PlayPage() {
                   className={`w-full py-3 rounded-xl text-sm border transition-all block text-center ${
                     isGuest
                       ? "border-white/5 text-white/15 cursor-not-allowed pointer-events-none"
-                      : "border-white/10 text-white/40 hover:text-white/60 hover:border-white/20"
+                      : "border-white/10 text-white/90 font-bold hover:text-white font-bold hover:border-white/20"
                   }`}
                 >
                   {isGuest && <Lock size={12} className="inline mr-2" />}
