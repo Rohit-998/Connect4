@@ -173,7 +173,7 @@ export default function AIvsAIPage() {
                 <motion.div
                   initial={{ opacity: 0, y: -5 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className="text-white/40 text-xs text-center max-w-sm mt-2"
+                  className="bg-black/60 backdrop-blur-md border border-white/15 text-white/90 font-semibold text-xs text-center max-w-sm mt-4 p-4 rounded-xl shadow-xl"
                 >
                   Alpha-Beta is searching 6 moves deep for every turn. This takes time! Please wait, or switch to Easy/Medium for an instant battle.
                 </motion.div>
