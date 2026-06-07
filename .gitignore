@@ -1,0 +1,15 @@
+# Environment secrets
+.env
+
+# Python
+__pycache__/
+*.pyc
+backend/venv/
+
+# Model checkpoints (too large for git)
+*.h5
+
+# Node
+node_modules/
+
+.vscode/
