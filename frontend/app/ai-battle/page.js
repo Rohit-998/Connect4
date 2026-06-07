@@ -152,10 +152,32 @@ export default function AIvsAIPage() {
                   disabled={loading || isReplaying}
                   className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 hover:bg-white/20 text-white/60 hover:text-white text-sm transition-all disabled:opacity-30"
                 >
-                  <Play size={14} />
-                  {gameStarted ? "Rematch" : "Start Battle"}
+                  {loading ? (
+                    <>
+                      <motion.div animate={{ rotate: 360 }} transition={{ duration: 1, repeat: Infinity, ease: "linear" }}>
+                        <Zap size={14} />
+                      </motion.div>
+                      Simulating Game...
+                    </>
+                  ) : (
+                    <>
+                      <Play size={14} />
+                      {gameStarted ? "Rematch" : "Start Battle"}
+                    </>
+                  )}
                 </button>
               </div>
+
+              {/* Hard Mode Delay Warning */}
+              {loading && difficulty === "hard" && (
+                <motion.div
+                  initial={{ opacity: 0, y: -5 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="text-white/40 text-xs text-center max-w-sm mt-2"
+                >
+                  Alpha-Beta is searching 6 moves deep for every turn. This takes time! Please wait, or switch to Easy/Medium for an instant battle.
+                </motion.div>
+              )}
             </div>
 
             {/* Right Panel - Info */}
