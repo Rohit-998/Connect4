@@ -49,10 +49,12 @@ def get_agent(opponent, difficulty):
         return dqn_agents[difficulty]
     return ab_agents[difficulty]
 
+ALLOWED_ORIGINS = os.getenv("ALLOWED_ORIGINS", "http://localhost:3000").split(",")
+
 app = FastAPI(title="Connect 4 AI API")
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=ALLOWED_ORIGINS,
     allow_methods=["*"],
     allow_headers=["*"],
 )
