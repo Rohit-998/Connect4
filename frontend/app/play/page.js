@@ -169,7 +169,7 @@ export default function PlayPage() {
 
       <div className="relative z-10 min-h-screen flex flex-col">
         {/* Top Bar */}
-        <div className="flex items-center justify-between px-6 py-4">
+        <div className="flex flex-wrap items-center justify-between px-6 py-4 gap-4">
           <a
             href="/"
             className="flex items-center gap-2 text-white/70 font-semibold hover:text-white font-bold transition-colors text-sm"
@@ -178,7 +178,7 @@ export default function PlayPage() {
             Back
           </a>
 
-          <div className="flex items-center gap-3">
+          <div className="flex flex-wrap items-center justify-center gap-3">
             {/* Difficulty selector */}
             <div className="flex bg-black/50 backdrop-blur-md rounded-full p-0.5">
               {["easy", "medium", "hard"].map((d) => (
@@ -232,9 +232,9 @@ export default function PlayPage() {
                     setShowAuth(true);
                     setGameId(null);
                   }}
-                  className="text-white/15 text-[10px] hover:text-red-400/60 transition-colors"
+                  className="px-3 py-1 bg-red-500/10 text-red-400 font-medium rounded-full text-[10px] hover:bg-red-500/20 transition-colors uppercase tracking-wider border border-red-500/20"
                 >
-                  logout
+                  Logout
                 </button>
               )}
             </div>

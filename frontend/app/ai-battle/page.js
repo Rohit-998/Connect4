@@ -29,33 +29,58 @@ export default function AIvsAIPage() {
     setBoard(EMPTY_BOARD);
     setMoves([]);
     setWinner(null);
-    setGameStarted(false);
+    setGameStarted(true);
     setCurrentMoveIndex(0);
-    setIsReplaying(false);
+    setIsReplaying(true);
+
+    let currentBoard = Array(6).fill(null).map(() => Array(7).fill(0));
 
     try {
-      const data = await apiAIvsAI(difficulty);
-      setAllMoves(data.moves);
-      setFinalBoard(data.board);
-      setWinner(data.winner);
-      setGameStarted(true);
-      setIsReplaying(true);
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000"}/api/ai-vs-ai`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ difficulty })
+      });
 
-      // Replay moves one by one with animation
-      let currentBoard = Array(6).fill(null).map(() => Array(7).fill(0));
-      for (let i = 0; i < data.moves.length; i++) {
-        await new Promise((r) => setTimeout(r, 400));
-        const move = data.moves[i];
-        currentBoard = currentBoard.map((row) => [...row]);
-        currentBoard[move.row][move.col] = move.player === "dqn" ? 1 : 2;
-        setBoard(currentBoard.map((row) => [...row]));
-        setMoves(data.moves.slice(0, i + 1));
-        setCurrentMoveIndex(i + 1);
+      const reader = res.body.getReader();
+      const decoder = new TextDecoder();
+      let buffer = "";
+      
+      // Clear loading state as soon as stream starts
+      setLoading(false);
+
+      while (true) {
+        const { value, done } = await reader.read();
+        if (done) break;
+
+        buffer += decoder.decode(value, { stream: true });
+        const lines = buffer.split('\n\n');
+        buffer = lines.pop(); // keep the last incomplete chunk
+
+        for (const line of lines) {
+          if (line.startsWith('data: ')) {
+            const data = JSON.parse(line.slice(6));
+
+            if (data.type === 'move') {
+              const move = data.data;
+              currentBoard[move.row][move.col] = move.player === "dqn" ? 1 : 2;
+              setBoard(currentBoard.map(r => [...r]));
+              setMoves(prev => {
+                const newMoves = [...prev, move];
+                setCurrentMoveIndex(newMoves.length);
+                return newMoves;
+              });
+            } else if (data.type === 'game_over') {
+              setFinalBoard(data.board);
+              setWinner(data.winner);
+              setAllMoves(data.moves);
+              setIsReplaying(false);
+            }
+          }
+        }
       }
-      setIsReplaying(false);
     } catch (err) {
-      console.error("AI vs AI error:", err);
-    } finally {
+      console.error("AI vs AI stream error:", err);
       setLoading(false);
     }
   };
@@ -81,7 +106,7 @@ export default function AIvsAIPage() {
 
       <div className="relative z-10 min-h-screen flex flex-col">
         {/* Top Bar */}
-        <div className="flex items-center justify-between px-6 py-4">
+        <div className="flex flex-wrap items-center justify-between px-6 py-4 gap-4">
           <a
             href="/"
             className="flex items-center gap-2 text-white/70 font-semibold hover:text-white font-bold transition-colors text-sm"
@@ -90,7 +115,7 @@ export default function AIvsAIPage() {
             Back
           </a>
 
-          <div className="flex items-center gap-3">
+          <div className="flex flex-wrap items-center justify-center gap-3">
             <div className="flex bg-black/50 backdrop-blur-md rounded-full p-0.5">
               {["easy", "medium", "hard"].map((d) => (
                 <button

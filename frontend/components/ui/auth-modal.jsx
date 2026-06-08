@@ -12,11 +12,13 @@ export default function AuthModal({ isOpen, onClose, onAuth }) {
   const [username, setUsername] = useState("")
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
+  const [successMsg, setSuccessMsg] = useState(null)
 
   const handleSubmit = async (e) => {
     e.preventDefault()
     setLoading(true)
     setError(null)
+    setSuccessMsg(null)
 
     try {
       if (mode === "signup") {
@@ -26,7 +28,16 @@ export default function AuthModal({ isOpen, onClose, onAuth }) {
           options: { data: { username } },
         })
         if (signUpError) throw signUpError
+        
+        // If email confirmation is required, session will be null
+        if (!data.session) {
+          setSuccessMsg("Account created! Please check your email to verify your account.")
+          setMode("login")
+          return // Do not close the modal or call onAuth
+        }
+        
         onAuth(data.session)
+        onClose()
       } else {
         const { data, error: signInError } = await supabase.auth.signInWithPassword({
           email,
@@ -34,8 +45,8 @@ export default function AuthModal({ isOpen, onClose, onAuth }) {
         })
         if (signInError) throw signInError
         onAuth(data.session)
+        onClose()
       }
-      onClose()
     } catch (err) {
       setError(err.message)
     } finally {
@@ -140,6 +151,12 @@ export default function AuthModal({ isOpen, onClose, onAuth }) {
             {error && (
               <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-red-400 text-xs">
                 {error}
+              </motion.p>
+            )}
+
+            {successMsg && (
+              <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-emerald-400 font-medium text-xs text-center pb-2">
+                {successMsg}
               </motion.p>
             )}
 

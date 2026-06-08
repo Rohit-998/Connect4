@@ -7,6 +7,7 @@ import numpy as np
 from dotenv import load_dotenv
 from supabase import create_client
 from fastapi import FastAPI, Header
+from fastapi.responses import StreamingResponse
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
@@ -272,58 +273,68 @@ class AIvsAIRequest(BaseModel):
 
 @app.post("/api/ai-vs-ai")
 def ai_vs_ai(request: AIvsAIRequest):
-    """Play a full game: DQN (Player 1) vs AlphaBeta (Player 2)."""
-    game = Connect4Game()
     difficulty = request.difficulty
-    dqn = get_agent("dqn", difficulty)
-    ab = get_agent("alphabeta", difficulty)
 
-    moves = []
-    turn = 0
+    def generate_moves():
+        game = Connect4Game()
+        dqn = dqn_agents[difficulty]
+        ab = ab_agents[difficulty]
 
-    while not game.is_game_over():
-        state = game.get_state()
-        valid_moves = game.get_valid_moves()
+        turn = 0
+        moves = []
 
-        if game.current_player == 1:
-            # DQN's turn — random opening for first move
-            if turn < 2:
-                col = random.choice(valid_moves)
+        while not game.is_game_over():
+            state = game.get_state()
+            valid_moves = game.get_valid_moves()
+
+            if game.current_player == 1:
+                # DQN's turn — random opening for first move
+                if turn < 2:
+                    col = random.choice(valid_moves)
+                else:
+                    col = dqn.select_action(state, valid_moves)
+                agent_name = "dqn"
             else:
-                col = dqn.select_action(state, valid_moves)
-            agent_name = "dqn"
+                # Alpha-Beta's turn — random opening for first move
+                if turn < 2:
+                    col = random.choice(valid_moves)
+                else:
+                    col = ab.select_action(state, valid_moves)
+                agent_name = "alphabeta"
+
+            row_result = game.drop_disc(col)
+            turn += 1
+            move_data = {
+                "turn": turn,
+                "player": agent_name,
+                "col": col,
+                "row": row_result[0]
+            }
+            moves.append(move_data)
+
+            # Yield the move instantly to the frontend
+            import json
+            yield f"data: {json.dumps({'type': 'move', 'data': move_data})}\n\n"
+
+            if not game.is_game_over():
+                game.switch_player()
+
+        winner = game.check_winner()
+        if winner == 1:
+            result = "dqn"
+        elif winner == 2:
+            result = "alphabeta"
         else:
-            # Alpha-Beta's turn — random opening for first move
-            if turn < 2:
-                col = random.choice(valid_moves)
-            else:
-                col = ab.select_action(state, valid_moves)
-            agent_name = "alphabeta"
+            result = "draw"
 
-        row_result = game.drop_disc(col)
-        turn += 1
-        moves.append({
-            "turn": turn,
-            "player": agent_name,
-            "col": col,
-            "row": row_result[0]
-        })
+        final_data = {
+            "type": "game_over",
+            "board": game.get_state().tolist(),
+            "winner": result,
+            "moves": moves,
+            "total_turns": turn,
+            "difficulty": difficulty
+        }
+        yield f"data: {json.dumps(final_data)}\n\n"
 
-        if not game.is_game_over():
-            game.switch_player()
-
-    winner = game.check_winner()
-    if winner == 1:
-        result = "dqn"
-    elif winner == 2:
-        result = "alphabeta"
-    else:
-        result = "draw"
-
-    return {
-        "board": game.get_state().tolist(),
-        "winner": result,
-        "moves": moves,
-        "total_turns": turn,
-        "difficulty": difficulty
-    }
+    return StreamingResponse(generate_moves(), media_type="text/event-stream")

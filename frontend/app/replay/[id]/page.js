@@ -126,18 +126,18 @@ export default function ReplayViewerPage() {
 
       <div className="relative z-10 min-h-screen flex flex-col">
         {/* Top Bar */}
-        <div className="flex items-center justify-between px-6 py-4">
+        <div className="flex flex-wrap items-center justify-between px-6 py-4 gap-4">
           <a href="/replays" className="flex items-center gap-2 text-white/70 font-semibold hover:text-white font-bold transition-colors text-sm">
             <ArrowLeft size={16} /> Replays
           </a>
-          <div className="text-white/50 font-medium text-xs">
+          <div className="text-white/50 font-medium text-xs flex flex-wrap gap-2 items-center justify-center">
             <span className="capitalize">{replay.result}</span>
-            <span className="text-white/10 mx-2">·</span>
+            <span className="text-white/10 hidden sm:inline">·</span>
             <span>vs DQN ({replay.difficulty})</span>
-            <span className="text-white/10 mx-2">·</span>
+            <span className="text-white/10 hidden sm:inline">·</span>
             <span>{replay.moves.length} moves</span>
           </div>
-          <div className="w-16" />
+          <div className="w-16 hidden sm:block" />
         </div>
 
         {/* Board */}
