@@ -10,4 +10,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Ping Render Server
-        run: curl -s https://connect4-ag9q.onrender.com/docs > /dev/null
+        run: curl -s https://connect4-ag9q.onrender.com > /dev/null
