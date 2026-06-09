@@ -84,6 +84,11 @@ def find_winning_move(game, player, valid_moves):
     return None
 
 
+@app.get("/health")
+def health_check():
+    return {"status": "ok"}
+
+
 @app.post("/api/new-game")
 def new_game(request: NewGameRequest):
     game_id = str(uuid.uuid4())
