@@ -57,4 +57,4 @@ jobs:
           app-name: 'Connect4'
           slot-name: 'Production'
           package: .
-          startup-command: 'cd backend && gunicorn app:app --workers 1 --worker-class uvicorn.workers.UvicornWorker --bind 0.0.0.0:8000 --timeout 120'
+          startup-command: 'gunicorn app:app --workers 1 --worker-class uvicorn.workers.UvicornWorker --bind 0.0.0.0:8000 --timeout 120'
