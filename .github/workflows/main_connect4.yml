@@ -1,4 +1,3 @@
-```yaml
 name: Build and deploy Python app to Azure Web App - Connect4
 
 on:
@@ -10,22 +9,18 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
     permissions:
       contents: read
 
     steps:
-      # Checkout code
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # Set Python version
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
 
-      # Create venv and install dependencies
       - name: Install dependencies
         working-directory: ./backend
         run: |
@@ -34,7 +29,6 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      # Upload backend folder as artifact
       - name: Upload artifact for deployment
         uses: actions/upload-artifact@v4
         with:
@@ -44,20 +38,17 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     needs: build
-
     permissions:
       id-token: write
       contents: read
 
     steps:
-      # Download build artifact
       - name: Download artifact
         uses: actions/download-artifact@v4
         with:
           name: python-app
           path: .
 
-      # Azure Login
       - name: Login to Azure
         uses: azure/login@v2
         with:
@@ -65,7 +56,6 @@ jobs:
           tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_B6CA6B1F32334D5CBF6CB19CEE21F999 }}
           subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_BA4B42C729D74D5E86A353D0836341F0 }}
 
-      # Deploy to Azure Web App
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
@@ -73,4 +63,3 @@ jobs:
           app-name: 'Connect4'
           slot-name: 'Production'
           package: .
-```
